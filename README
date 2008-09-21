@@ -1,0 +1,20 @@
+:: kgs_stats ::
+Author: chmeee
+
+kgs_stats is a simple ruby script to get stats about your Go game scores.
+I wanted to get stats about how I was doing every month so I made this script.
+
+For now you can specify:
+- the user you want to get stats from
+- the size of the board for the games you want to get stats from
+- the month you want to get stats from
+
+TODO:
+- get stats for several months
+- be able to specify ranked or free games
+- get stats for ranked versus free games
+- get stats for all kinds of games
+- stats visualization using ChartDirector
+
+Feel free to improve it if you feel like it.
+
