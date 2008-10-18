@@ -9,6 +9,7 @@ require 'optparse'
 # Initial counters
 count = 0
 won   = 0
+lost  = 0
 jigo  = 0
 
 # Player, board and month information
@@ -24,8 +25,8 @@ opts = OptionParser.new do |opts|
   opts.on("-b [string]", "Board size (default = 19)") do |b|
     board = b
   end
-  opts.on("-m [string]", "Month we want the stats for (default = current month)") do |m|
-    month = m
+  opts.on("-m [string]", "Month we want the stats for as YYYY-MM (default = current month)") do |m|
+     month = m
   end
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
@@ -53,6 +54,7 @@ Net::HTTP.start("www.gokgs.com") do |http|
           if line =~ /RE\[(.*)\]/
             res = $1
             won += 1 if (res =~ /^W/ and white == player) or (res =~ /^B/ and black == player)
+            lost += 1 if (res =~ /^B/ and white == player) or (res =~ /^W/ and black == player)
             jigo += 1 if (res == '0')
             count += 1
             break
@@ -63,8 +65,9 @@ Net::HTTP.start("www.gokgs.com") do |http|
   end
 end
 
-puts ":: KGS stats for #{player} ::"
+puts ":: KGS stats for #{player} on #{month} ::"
 puts "Total\t= #{count}"
 puts "Won\t= #{won}"
+puts "Lost\t= #{lost}"
 puts "Jigo\t= #{jigo}"
 printf("%% won\t= %.2f %%\n", count != 0 ? won.to_f*100/count : 0)
